@@ -1,58 +1,115 @@
 "use client";
 import { useState } from "react";
+import { Button } from "./ui/Button";
+import { Input } from "./ui/Input";
+import { Label } from "./ui/Label";
+import { useRouter } from "next/navigation";
 
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "./ui/Sheet";
+import Link from "next/link";
 export default function Navbar() {
+  const router = useRouter();
   const [active, setActive] = useState(false);
-
+  const handleNav = (nav: string) => {
+    router.push(nav, { scroll: false })
+  };
   return (
     <>
       <nav className="hidden sm:flex items-center justify-between w-full max-w-7xl  px-6 py-10">
         <div className="flex">
           <h1 className="text-3xl text-blue-600">GSD </h1>
           <h1 className="text-3xl">Group</h1>
-          
         </div>
-        
+
         <ul className="flex gap-10 items-center">
-          <li className="">Our process</li>
+          <Link href={"/"}>
+            <li>Home</li>
+          </Link>
+
+          <Link href="/about">
+            <li>About us</li>
+          </Link>
+
+          <li>
+            <Link href={"/contact"}>
+              <button className="bg-blue-600 p-2 px-3 text-sm text-white rounded-full">
+                Contact us
+              </button>{" "}
+            </Link>
+          </li>
+          <li></li>
+        </ul>
+      </nav>
+      <nav className="flex sm:hidden items-center justify-between w-full max-w-7xl  px-6 py-10">
+        <div className="flex">
+          <h1 className="text-3xl text-blue-600">GSD </h1>
+          <h1 className="text-3xl">Group</h1>
+        </div>
+
+        <ul className="flex gap-10 items-center">
+          {/* <li className="">Our process</li>
           <li>About us</li>
           <li>
             <button className="bg-blue-600 p-2 px-3 text-sm text-white rounded-full">
               Contact us
             </button>
-          </li>
+          </li> */}
           <li>
-            <svg
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-              className="h-6 w-6 fill-neutral-950 group-hover:fill-neutral-700">
-              <path d="M2 6h20v2H2zM2 16h20v2H2z"></path>
-            </svg>
-          </li>
-        </ul>
-      </nav>
+            {" "}
+            <Sheet>
+              <SheetTrigger asChild>
+                <svg
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                  className="h-6 w-6 fill-neutral-950 group-hover:fill-neutral-700">
+                  <path d="M2 6h20v2H2zM2 16h20v2H2z"></path>
+                </svg>
+              </SheetTrigger>
+              <SheetContent>
+                <SheetHeader>
+                  <SheetTitle>
+                    {" "}
+                    <div className="flex w-full justify-center">
+                      <h1 className="text-3xl text-blue-600">GSD </h1>
+                      <h1 className="text-3xl">Group</h1>
+                    </div>
+                  </SheetTitle>
+                </SheetHeader>
+                <ul className="flex  text-3xl mt-20 flex-col gap-10 items-center">
+                  <SheetClose>
+                    <li onClick={ () => handleNav("/")}>Home</li>{" "}
+                  </SheetClose>
+                  <SheetClose>
+                  
+                      {" "}
+                      <li onClick={() => handleNav("/about")}>About us</li>
+                   
+                  </SheetClose>
+                  <SheetClose>
+             
+                      <li>
+                        <button onClick={() => handleNav("/contact")} className="bg-blue-600 p-2 px-3 text-xl text-white rounded-full">
+                          Contact us
+                        </button>
+                      </li>{" "}
+                    
+                  </SheetClose>
+              
+                </ul>
 
-      <nav className="flex sm:hidden items-center justify-between w-full max-w-7xl text-black px-6 py-10">
-        <h1 className="text-3xl">GSD Group</h1>
-        <button
-          className="cursor-pointer"
-          onClick={() => setActive((active) => !active)}>
-          <svg
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-            className={`h-6 w-6 z-[100000]  ${
-              active ? "fill-white" : "fill-neutral-950"
-            } group-hover:fill-neutral-700`}>
-            <path d="M2 6h20v2H2zM2 16h20v2H2z"></path>
-          </svg>
-        </button>
-        <ul
-          className={` transition-all duration-700 text-3xl flex h-screen p-20 items-center flex-col text-white gap-5 absolute top-0 ${
-            active ? "left-0" : "left-[100%]"
-          } inset-x-0 z-[100] bg-black `}>
-          <li className="text-white">Our process</li>
-          <li className="text-white">About us</li>
-          <li>Contact us</li>
+                <SheetFooter></SheetFooter>
+              </SheetContent>
+            </Sheet>
+          </li>
         </ul>
       </nav>
     </>
